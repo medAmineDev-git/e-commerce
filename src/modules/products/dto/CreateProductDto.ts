@@ -1,19 +1,61 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
+import { IsString, IsNumber, IsOptional, IsArray, IsBoolean, IsPositive, Min } from 'class-validator';
 
+export type Image = {
+  url: string;
+  alt: string
+}
 export class CreateProductDto {
   @IsString()
-  @IsNotEmpty()
   name: string;
 
   @IsString()
-  @IsNotEmpty()
-  description: string;
+  @IsOptional()
+  description?: string;
 
   @IsNumber()
   @IsPositive()
   price: number;
 
   @IsString()
-  @IsNotEmpty()
   category: string;
+
+  @IsString()
+  @IsOptional()
+  brand?: string;
+
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  stock?: number;
+
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  rating?: number;
+
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  numReviews?: number;
+
+  @IsArray()
+  @IsOptional()
+  images?: Image[];
+
+  @IsArray()
+  @IsOptional()
+  colors?: string[];
+
+  @IsArray()
+  @IsOptional()
+  sizes?: string[];
+
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  discount?: number;
+
+  @IsBoolean()
+  @IsOptional()
+  isFeatured?: boolean;
 }

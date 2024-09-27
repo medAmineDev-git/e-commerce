@@ -2,14 +2,22 @@ import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/commo
 import { ProductsService } from '../services/products.service';
 import { CreateProductDto } from '../dto/CreateProductDto';
 import { UpdateProductDto } from '../dto/UpdateProductDto';
+import { HttpMockApiService } from "../../../shared/module/services/httpMockApi.service";
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly httpMockService: HttpMockApiService) {}
 
-  @Get('hello') // Route Hello World
+  @Get('hello')
   getHello(): string {
-    return 'Hello World'; // Réponse pour la route hello
+    return 'Hello World';
+  }
+
+  @Get('createMock')
+  async testCreateProduct() {
+    return  this.httpMockService.createMock('Samsung S24 Ultra');
   }
 
   @Post()
