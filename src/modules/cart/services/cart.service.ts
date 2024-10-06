@@ -1,10 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProductsService } from "../../products/services/products.service";
-import { UserService } from "../../users/services/user.service";
-import { Cart, CartDocument } from "../models/cart.schema";
+import { Cart, CartDocument } from "../models/cart.model";
 import { CreateCartDto } from "../dto/create-cart.dto";
+import { ProductsService } from "../../products/services/products.service";
+import { CartRepositories } from "../repositories/cart.repositories";
+import { ProductPriceQuery } from "../models/cart.type";
+
+
 
 
 @Injectable()
@@ -12,7 +15,7 @@ export class CartService {
   constructor(
     @InjectModel(Cart.name) private cartModel: Model<CartDocument>,
     private productService: ProductsService,
-    private userService: UserService,
+    private cartRepositories: CartRepositories,
   ) {}
 
   async create(createCartDto: CreateCartDto): Promise<Cart> {
@@ -45,4 +48,8 @@ export class CartService {
   async getCart(userId: string): Promise<Cart> {
     return this.cartModel.findOne({ user: userId }).populate('items.product').exec();
   }
+
+   async getCartWithProductsWithPriceConditions(userId: string, priceProductQuery: ProductPriceQuery): Promise<Cart> {
+     return this.cartRepositories.getCartWithProductsWithPriceConditionsQuery(userId, priceProductQuery);
+   }
 }

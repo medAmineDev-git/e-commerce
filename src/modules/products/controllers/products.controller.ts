@@ -12,7 +12,7 @@ export class ProductsController {
 
   @Get('hello')
   getHello(): string {
-    return 'Hello World';
+    return 'Hello products';
   }
 
   @Get('createMock')

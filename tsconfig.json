@@ -16,6 +16,15 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/modules/**/*.ts",
+  ],
+  "exclude": ["node_modules", "dist"]
 }
